@@ -1,8 +1,10 @@
 const express = require("express");
-
+var cors = require("cors");
 var router = express.Router();
 const { getAllWorkouts } = require("../services/workout-service.js");
 /* GET home page. */
+router.use(cors());
+
 router.get("/", function (req, res, next) {
   // res.render('index', { title: 'Express' });
   res.send("Hellow World");
