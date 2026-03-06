@@ -1,0 +1,16 @@
+.container {
+  /* ... */
+  display: grid;
+  width: 100%;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
+  grid-template-areas:
+    "sidebar header  personal"
+    "sidebar main personal"
+    "sidebar main personal";
+}
+.sidebar {
+  grid-area: sidebar;
+}
+.main-content {
+  grid-area: main;
+}
