@@ -1,4 +1,9 @@
-const { getAll, getImage } = require("../clients/conexion.js");
+const {
+  getAll,
+  getImage,
+  getPage,
+  getWorkoutsByMuscleFromAllWorkouts,
+} = require("../clients/conexion.js");
 
 async function getAllWorkouts() {
   try {
@@ -16,4 +21,19 @@ async function getImageFromAPI(id) {
     console.error(error);
   }
 }
-module.exports = { getAllWorkouts, getImageFromAPI };
+function getPageFromAPI(page) {
+  const workouts = getPage(page);
+  return workouts;
+}
+
+function getWorkoutsByMuscle(muscleId) {
+  const workouts = getWorkoutsByMuscleFromAllWorkouts(muscleId);
+  return workouts;
+}
+
+module.exports = {
+  getAllWorkouts,
+  getImageFromAPI,
+  getPageFromAPI,
+  getWorkoutsByMuscle,
+};
