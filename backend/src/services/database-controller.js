@@ -27,4 +27,9 @@ function getSavedWorkouts() {
   const workouts = select.all();
   return workouts;
 }
-module.exports = { saveWorkout, getSavedWorkouts };
+function deleteWorkoutById(workoutId) {
+  console.log("workoutId", workoutId);
+  const query = db.prepare("DELETE FROM Workouts WHERE workout_id=?");
+  query.run(workoutId);
+}
+module.exports = { saveWorkout, getSavedWorkouts, deleteWorkoutById };

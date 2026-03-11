@@ -12,6 +12,7 @@ const {
 const {
   saveWorkout,
   getSavedWorkouts,
+  deleteWorkoutById,
 } = require("../services/database-controller.js");
 const {
   getImage,
@@ -66,5 +67,10 @@ router.get("/savedWorkouts", (req, res) => {
 router.get("/muscleList", (req, res) => {
   const muscles = getMuscleList();
   res.json(muscles);
+});
+
+router.post("/delete", (req, res) => {
+  const response = deleteWorkoutById(req.body.id);
+  res.send(response);
 });
 module.exports = router;

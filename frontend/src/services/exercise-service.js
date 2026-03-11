@@ -33,13 +33,23 @@ export async function saveWorkout(idW, nameW, categoryW, primaryMuscleW) {
   });
 
   const data = await response.json();
-  console.log(data);
 }
 export async function getSavedWorkouts() {
   const urlFetch = `${LOCALHOST_URL}savedWorkouts`;
   const response = await fetch(urlFetch);
   if (!response.ok) throw new Error("Error en la lectura");
   const data = await response.json();
-  console.log(data);
+
   return data;
+}
+
+export async function deleteWorkout(idW) {
+  const urlFetch = `${LOCALHOST_URL}delete`;
+  const response = await fetch(urlFetch, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id: idW,
+    }),
+  });
 }

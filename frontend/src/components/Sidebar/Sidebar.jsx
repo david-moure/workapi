@@ -28,15 +28,13 @@ export default function SideBar() {
     };
     fetchMuscleList().catch(console.error);
   }, []);
-  console.log(muscles);
+
   function handleChange(ev) {
     const target = ev.target;
     const value = target.value;
-    console.log(filter);
-    console.log(value);
+
     if (filter === value) {
       setFilter(null);
-      console.log("Puesto a 0");
       return;
     }
     setFilter(value);

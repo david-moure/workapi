@@ -1,43 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyledExerciseCard } from "./styles";
-import { getImage, saveWorkout } from "../../services/exercise-service";
+import {
+  deleteWorkout,
+  getImage,
+  saveWorkout,
+} from "../../services/exercise-service";
 import MyButton from "../MyButton/MyButton";
 import { useFavExerciseContext } from "../../services/context/fav-exercise-context";
 
-// const exercise = {
-//   id: "21f0113f-2775-43f1-8cd6-21e6ae02f719",
-//   code: "DUMBBELL_SHRUGS",
-//   primaryMuscles: [
-//     {
-//       id: "11a71b4e-1c3a-484c-9776-68b2b6288821",
-//       code: "TRAPEZIUS",
-//       color: "#264653",
-//       name: "Trapezius",
-//     },
-//   ],
-//   secondaryMuscles: [],
-//   types: [
-//     {
-//       id: "06604613-924a-407a-a7dd-a36c135a75bc",
-//       code: "ISOLATION",
-//       name: "Isolation",
-//     },
-//   ],
-//   categories: [
-//     {
-//       id: "db98fca6-754e-4f6f-91d5-a0c13a26e297",
-//       code: "FREE_WEIGHT",
-//       name: "Free weight",
-//     },
-//   ],
-//   name: "Dumbbell Shrugs",
-//   description:
-//     "Stand upright with a dumbbell in each hand, arms fully extended at your sides, and palms facing your body. Keep your chest lifted, shoulders pulled slightly back, and core engaged. Without bending your elbows, lift your shoulders straight up toward your ears as high as you can. Focus on contracting your trapezius muscles at the top of the movement. Pause briefly, then slowly lower your shoulders back down under control. Avoid rolling or rotating the shoulders — the motion should be vertical and controlled.",
-// };
 export default function ExerciseCard(props) {
+  /* Estado para almacenar el svg */
   const [svgObj, setSvgObj] = useState(null);
+  /* Contexto donde se guardan los ejercicios Favoritos */
   const { exercisesFav, setExercisesFav } = useFavExerciseContext();
+
+  const checkIsFavourite = useCallback(() => {
+    exercisesFav.some((exercise) => exercise.workout_id === props.exercise.id);
+  }, []);
+
   useEffect(() => {
+    /* Busca la imagen del backend cuando se carga el componente*/
     const fetchImage = async () => {
       const svg = await getImage(props.exercise.id);
       const test = `<svg ${(await svg.text()).split("<svg")[1]}`;
@@ -46,6 +28,7 @@ export default function ExerciseCard(props) {
 
     fetchImage().catch(console.error);
   }, []);
+
   const addToFavourites = () => {
     saveWorkout(
       props.exercise.id,
@@ -71,15 +54,32 @@ export default function ExerciseCard(props) {
       return [...prevFav];
     });
   };
+  const removeFromFavourites = () => {
+    setExercisesFav((prevFavs) => {
+      return prevFavs.filter(
+        (prevFav) => prevFav.workout_id !== props.exercise.id,
+      );
+    });
+    deleteWorkout(props.exercise.id);
+    // setIsFavourite(false);
+  };
+
   return (
     <StyledExerciseCard>
       <div className="image" dangerouslySetInnerHTML={{ __html: svgObj }} />
       <h4>{props.exercise.name}</h4>
       <p>
-        {" "}
-        Category: <strong>{props.exercise.categories[0].name}</strong>{" "}
+        Category: <strong>{props.exercise.categories[0].name}</strong>
       </p>
-      <MyButton handleClick={addToFavourites}></MyButton>
+      {exercisesFav.some(
+        (exercise) => exercise.workout_id === props.exercise.id,
+      ) ? (
+        <MyButton handleClick={removeFromFavourites}>
+          ❌ Remove from Favourites
+        </MyButton>
+      ) : (
+        <MyButton handleClick={addToFavourites}>❤️ Add to Favourites</MyButton>
+      )}
     </StyledExerciseCard>
   );
 }

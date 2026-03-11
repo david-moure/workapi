@@ -1,7 +1,7 @@
 const Database = require("better-sqlite3");
 
 const db = new Database("Workouts.db");
-
+// CREATE TABLE IF NOT EXISTS
 db.exec(
   `DROP TABLE IF EXISTS Workouts;
   	CREATE TABLE Workouts (

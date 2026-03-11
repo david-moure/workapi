@@ -14,7 +14,7 @@ export default function DataGrid(props) {
   useEffect(() => {
     const fetchExercises = async () => {
       const data = await getAllExercises();
-      console.log(data);
+
       setExercises(data);
     };
 
@@ -58,7 +58,6 @@ export default function DataGrid(props) {
       {exercises.map((exercise) => (
         <ExerciseCard key={exercise.id} exercise={exercise}></ExerciseCard>
       ))}
-      {/* <ExerciseCard /> */}
     </StyledDataGrid>
   );
 }
