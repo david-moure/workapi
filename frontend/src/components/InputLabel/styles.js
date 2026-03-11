@@ -5,5 +5,5 @@ export const StyledInputLabel = styled.div`
   flex-direction: row;
   gap: 1rem;
   text-align: center;
-  padding: 1rem;
+  /* padding: 0.5rem; */
 `;

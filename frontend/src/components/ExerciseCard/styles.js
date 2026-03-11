@@ -9,17 +9,17 @@ export const StyledExerciseCard = styled.div`
   gap: 1rem;
   background-color: white;
   border-radius: 1rem;
-  min-height: 500px;
+  min-height: 250px;
   height: 100%;
   width: 100%;
   min-width: 300px;
-  padding: 2rem;
+  /* padding: 2rem; */
   background-color: lightsalmon;
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   .image svg {
-    width: 200px !important;
-    height: 200px !important;
+    width: 150px !important;
+    height: 150px !important;
     object-position: center;
   }
 `;
