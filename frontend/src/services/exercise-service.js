@@ -1,5 +1,4 @@
 import { useContext } from "react";
-// import { FavExerciseContext } from "./context/fav-exercise-context.js";
 
 const LOCALHOST_URL = "http://localhost:3000/";
 
@@ -32,17 +31,6 @@ export async function saveWorkout(idW, nameW, categoryW, primaryMuscleW) {
       primary_muscle: primaryMuscleW,
     }),
   });
-
-  // const { favExercises, setFavExercises } = useContext(FavExerciseContext);
-  // setFavExercises((prevFav) => [
-  //   ...prevFav,
-  //   {
-  //     workout_id: idW,
-  //     name: nameW,
-  //     category: categoryW,
-  //     primary_muscle: primaryMuscleW,
-  //   },
-  // ]);
 
   const data = await response.json();
   console.log(data);

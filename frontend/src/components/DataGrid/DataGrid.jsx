@@ -20,6 +20,7 @@ export default function DataGrid(props) {
 
     fetchExercises().catch(console.error);
   }, []);
+  // Filtrado por musculo
   // console.log("Musculo filtrado");
   // let paco = [];
 
@@ -33,6 +34,20 @@ export default function DataGrid(props) {
   //   return acc;
   // }, []);
   // console.log(accum);
+
+  //Obtener listado de musculos
+
+  // console.log("Inicial", muscles);
+  // exercises.forEach((exercise) => {
+  //   exercise.primaryMuscles.forEach((primaryMuscle) => {
+  //     console.log(!muscles.some((muscle) => muscle.id === primaryMuscle.id));
+  //     if (!muscles.some((muscle) => muscle.id === primaryMuscle.id)) {
+  //       console.log("Guardado -", primaryMuscle);
+  //       muscles.push(primaryMuscle);
+  //     }
+  //   });
+  // });
+
   const roundedShadow = `
   border-radius: 1rem;
   box-shadow:  0 2px 8px rgba(0,0,0,0.35)`;

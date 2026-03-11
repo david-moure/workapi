@@ -237,10 +237,26 @@ function getWorkoutsByMuscleFromAllWorkouts(muscleId) {
 function workoutByMusclePage(page) {
   return (page, workoutsByMuscle);
 }
+
+function getAllMuscles() {
+  if (workoutsCache.length === 0) {
+    return [];
+  }
+  const muscles = [];
+  workoutsCache.forEach((workout) => {
+    workout.primaryMuscles.forEach((primaryMuscle) => {
+      if (!muscles.some((muscle) => muscle.id === primaryMuscle.id)) {
+        muscles.push(primaryMuscle);
+      }
+    });
+  });
+  return muscles;
+}
 module.exports = {
   getAll,
   getImage,
   getPage,
   getWorkoutsByMuscleFromAllWorkouts,
   workoutByMusclePage,
+  getAllMuscles,
 };

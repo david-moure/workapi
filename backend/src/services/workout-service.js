@@ -3,6 +3,7 @@ const {
   getImage,
   getPage,
   getWorkoutsByMuscleFromAllWorkouts,
+  getAllMuscles,
 } = require("../clients/conexion.js");
 
 async function getAllWorkouts() {
@@ -30,10 +31,15 @@ function getWorkoutsByMuscle(muscleId) {
   const workouts = getWorkoutsByMuscleFromAllWorkouts(muscleId);
   return workouts;
 }
+function getMuscleList() {
+  const muscles = getAllMuscles();
+  return muscles;
+}
 
 module.exports = {
   getAllWorkouts,
   getImageFromAPI,
   getPageFromAPI,
   getWorkoutsByMuscle,
+  getMuscleList,
 };

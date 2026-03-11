@@ -7,6 +7,7 @@ const {
   getImageFromAPI,
   getPageFromAPI,
   getWorkoutsByMuscle,
+  getMuscleList,
 } = require("../services/workout-service.js");
 const {
   saveWorkout,
@@ -49,10 +50,8 @@ router.get("/workoutsByMuscle/:muscleId", async (req, res) => {
   res.send(getWorkoutsByMuscle(muscleId));
 });
 router.post("/save", (req, res) => {
-  // const { workout_id, name, category, primary_muscle } = req.body;
   const response = saveWorkout(req.body);
   if (response) {
-    // res.send(JSON.stringify({ Response: "Save succesfully" }));
     res.send({ Response: "Save succesfully" });
   } else {
     res.send({ Response: "Already exists" });
@@ -62,5 +61,10 @@ router.get("/savedWorkouts", (req, res) => {
   // res.send("got it");
   const workouts = getSavedWorkouts();
   res.json(workouts);
+});
+
+router.get("/muscleList", (req, res) => {
+  const muscles = getMuscleList();
+  res.json(muscles);
 });
 module.exports = router;
