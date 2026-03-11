@@ -53,3 +53,14 @@ export async function deleteWorkout(idW) {
     }),
   });
 }
+
+export async function getExercisesByFilterPage() {
+  console.log("Workouts by Filter & Page");
+}
+
+export async function getExercisesByFilter() {
+  console.log("Workouts by Filter");
+}
+export async function getExercisesByPage() {
+  console.log("Workouts by Page");
+}

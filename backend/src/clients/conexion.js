@@ -6,10 +6,24 @@ let workoutsByMuscle = [];
 let amountExercises = 4;
 let images = {};
 async function getAll() {
-  if (workoutsCache.length > 0) {
-    const workoutsByLength = getPage(1);
-    return workoutsByLength;
+  if (workoutsCache.length == 0) {
+    await loadCache();
   }
+
+  const workoutsByLength = getPage(1);
+  return workoutsByLength;
+
+  //   const response = await fetch(API_URL, {
+  //     headers: { "x-api-key": API_KEY },
+  //   });
+  //   if (!response.ok) {
+  //     throw new Error("Error en la lectura de la API", response);
+  //   }
+  //   const data = await response.json();
+  //   workoutsCache = data;
+  //   getPage(1);
+}
+async function loadCache() {
   const response = await fetch(API_URL, {
     headers: { "x-api-key": API_KEY },
   });
@@ -18,10 +32,12 @@ async function getAll() {
   }
   const data = await response.json();
   workoutsCache = data;
-  getPage(1);
 }
 
-function getPage(page, workouts = workoutsCache) {
+async function getPage(page, workouts = workoutsCache) {
+  if (workoutsCache.length == 0) {
+    await loadCache();
+  }
   console.log("Longitud de workoutsCache", workoutsCache.length);
   console.log("Pagina:", page);
   if (workouts.length > 0 && page > 0) {
@@ -224,9 +240,10 @@ async function getImage(id) {
   //   console.log(error);
   // }
 }
-
-function getWorkoutsByMuscleFromAllWorkouts(muscleId) {
-  if (workoutsCache.length === 0) return [];
+async function getWorkoutsByMuscleFromAllWorkouts(muscleId) {
+  if (workoutsCache.length === 0) {
+    await loadCache();
+  }
   workoutsByMuscle = workoutsCache.reduce((acc, exercise) => {
     if (exercise.primaryMuscles.some((muscle) => muscle.id === muscleId))
       acc.push(exercise);
@@ -234,13 +251,14 @@ function getWorkoutsByMuscleFromAllWorkouts(muscleId) {
   }, []);
   return workoutsByMuscle;
 }
-function workoutByMusclePage(page) {
-  return (page, workoutsByMuscle);
+async function getworkoutByMusclePage(muscleId, page) {
+  await getWorkoutsByMuscleFromAllWorkouts(muscleId);
+  return getPage(page, workoutsByMuscle);
 }
 
-function getAllMuscles() {
+async function getAllMuscles() {
   if (workoutsCache.length === 0) {
-    return [];
+    await loadCache();
   }
   const muscles = [];
   workoutsCache.forEach((workout) => {
@@ -256,7 +274,6 @@ module.exports = {
   getAll,
   getImage,
   getPage,
-  getWorkoutsByMuscleFromAllWorkouts,
-  workoutByMusclePage,
+  getworkoutByMusclePage,
   getAllMuscles,
 };

@@ -64,8 +64,15 @@ router.get("/savedWorkouts", (req, res) => {
   res.json(workouts);
 });
 
-router.get("/muscleList", (req, res) => {
-  const muscles = getMuscleList();
+router.get("/muscleList", async (req, res) => {
+  const muscles = await getMuscleList();
+  res.json(muscles);
+});
+
+router.post("/workoutMuscle", async (req, res) => {
+  const { id } = req.body;
+  console.log(id);
+  const muscles = await getWorkoutsByMuscle(id);
   res.json(muscles);
 });
 
@@ -73,4 +80,5 @@ router.post("/delete", (req, res) => {
   const response = deleteWorkoutById(req.body.id);
   res.send(response);
 });
+
 module.exports = router;
