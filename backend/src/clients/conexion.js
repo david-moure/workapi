@@ -5,24 +5,7 @@ let workoutsCache = [];
 let workoutsByMuscle = [];
 let amountExercises = 4;
 let images = {};
-async function getAll() {
-  if (workoutsCache.length == 0) {
-    await loadCache();
-  }
 
-  const workoutsByLength = getPage(1);
-  return workoutsByLength;
-
-  //   const response = await fetch(API_URL, {
-  //     headers: { "x-api-key": API_KEY },
-  //   });
-  //   if (!response.ok) {
-  //     throw new Error("Error en la lectura de la API", response);
-  //   }
-  //   const data = await response.json();
-  //   workoutsCache = data;
-  //   getPage(1);
-}
 async function loadCache() {
   const response = await fetch(API_URL, {
     headers: { "x-api-key": API_KEY },
@@ -32,6 +15,17 @@ async function loadCache() {
   }
   const data = await response.json();
   workoutsCache = data;
+}
+async function getAll() {
+  if (workoutsCache.length == 0) {
+    await loadCache();
+  }
+
+  const workouts = await getPage(1);
+
+  const length = workoutsCache.length;
+  //   return { length, workouts };
+  return workouts;
 }
 
 async function getPage(page, workouts = workoutsCache) {

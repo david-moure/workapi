@@ -5,12 +5,7 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import {
-  getAllExercises,
-  getExercisesByFilter,
-  getExercisesByFilterPage,
-  getExercisesByPage,
-} from "../exercise-service";
+import { getAllExercises, getExercisesByFilter } from "../exercise-service";
 
 const FilterContext = createContext();
 
@@ -18,24 +13,23 @@ export const FilterContextProvider = ({ children }) => {
   const [filter, setFilter] = useState("");
   const [exercises, setExercises] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [page, setPage] = useState(0);
+  const [length, setLenght] = useState(0);
+  const [page, setPage] = useState(1);
 
   const fetchExercises = useCallback(async () => {
     setIsLoading(true);
     try {
       let data = [];
-      if (filter && page) {
-        const data = await getExercisesByFilterPage();
-      } else if (filter && !page) {
-        const data = await getExercisesByFilter();
-      } else if (!filter && page) {
-        const data = await getExercisesByPage();
+      if (filter) {
+        data = await getExercisesByFilter(filter, page);
       } else {
         console.log("Default");
         data = await getAllExercises();
+        console.log(data);
       }
 
       setExercises(data);
+
       setIsLoading(false);
     } catch {
       console.error;

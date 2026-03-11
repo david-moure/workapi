@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("../../database/Database.js");
 var cors = require("cors");
 var router = express.Router();
+router.use(cors());
 const {
   getAllWorkouts,
   getImageFromAPI,
@@ -17,12 +18,7 @@ const {
 const {
   getImage,
 } = require("../../../frontend/src/services/exercise-service.js");
-/* GET home page. */
-router.use(cors());
 
-router.post("/post", (req, res) => {
-  res.send("Got a POST request");
-});
 router.get("/", async (req, res) => {
   try {
     let workoutsJSON = await getAllWorkouts();
@@ -70,9 +66,11 @@ router.get("/muscleList", async (req, res) => {
 });
 
 router.post("/workoutMuscle", async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
-  const muscles = await getWorkoutsByMuscle(id);
+  const { id, page } = req.body;
+
+  console.log("ID:", id);
+  console.log("PAGE:", page);
+  const muscles = await getWorkoutsByMuscle(id, page ?? "");
   res.json(muscles);
 });
 

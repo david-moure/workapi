@@ -10,29 +10,6 @@ export default function DataGrid(props) {
   //   "11a71b4e-1c3a-484c-9776-68b2b6288821", //trapecio
   //   "ec941c4f-8202-4302-8d59-7942f48b9b6f", //shoulders
   // ];
-  // useEffect(() => {
-  //   const fetchExercises = async () => {
-  //     const data = await getAllExercises();
-
-  //     setExercises(data);
-  //   };
-
-  //   fetchExercises().catch(console.error);
-  // }, []);
-  // Filtrado por musculo
-  // console.log("Musculo filtrado");
-  // let paco = [];
-
-  // let accum = exercises.reduce((acc, exercise) => {
-  //   if (
-  //     exercise.primaryMuscles.some((muscle) =>
-  //       musclesId.some((muscleId) => muscle.id === muscleId),
-  //     )
-  //   )
-  //     acc.push(exercise);
-  //   return acc;
-  // }, []);
-  // console.log(accum);
 
   const roundedShadow = `
   border-radius: 1rem;

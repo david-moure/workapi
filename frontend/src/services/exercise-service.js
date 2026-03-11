@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 const LOCALHOST_URL = "http://localhost:3000/";
 
-export async function getAllExercises() {
+export async function getAllExercises(filter = "", page = 1) {
   const response = await fetch(LOCALHOST_URL);
   if (!response.ok) throw Error("Error reading from backend");
   const data = await response.json();
@@ -54,13 +54,19 @@ export async function deleteWorkout(idW) {
   });
 }
 
-export async function getExercisesByFilterPage() {
-  console.log("Workouts by Filter & Page");
-}
-
-export async function getExercisesByFilter() {
+export async function getExercisesByFilter(idW, pageW) {
   console.log("Workouts by Filter");
-}
-export async function getExercisesByPage() {
-  console.log("Workouts by Page");
+  const urlFetch = `${LOCALHOST_URL}workoutMuscle`;
+  const response = await fetch(urlFetch, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id: idW,
+      page: pageW,
+    }),
+  });
+  if (!response.ok) throw new Error("Error de lectura del backend");
+  const data = await response.json();
+  console.log(data);
+  return data;
 }
