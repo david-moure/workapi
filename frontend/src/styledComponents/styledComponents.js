@@ -7,5 +7,5 @@ export const SmallTitle = styled.h2`
 `;
 export const LiList = styled.li`
   list-style-type: None;
-  text-align: left;
+  text-align: center;
 `;

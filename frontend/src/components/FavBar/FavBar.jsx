@@ -19,7 +19,7 @@ export default function FavBar() {
 
   console.log(exercisesFav);
   const listExercises = exercisesFav.map((exercise) => (
-    <LiList key={exercise.workout_id}>{exercise.name}</LiList>
+    <FavItem key={exercise.workout_id} exercise={exercise}></FavItem>
   ));
   return (
     <StyledFavBar>
