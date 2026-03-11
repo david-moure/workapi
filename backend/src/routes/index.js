@@ -52,9 +52,10 @@ router.post("/save", (req, res) => {
   // const { workout_id, name, category, primary_muscle } = req.body;
   const response = saveWorkout(req.body);
   if (response) {
-    res.send("Save succesfully");
+    // res.send(JSON.stringify({ Response: "Save succesfully" }));
+    res.send({ Response: "Save succesfully" });
   } else {
-    res.send("Already exists");
+    res.send({ Response: "Already exists" });
   }
 });
 router.get("/savedWorkouts", (req, res) => {

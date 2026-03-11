@@ -3,10 +3,9 @@ import { useEffect } from "react";
 import { StyledDataGrid } from "./styles";
 import { getAllExercises } from "../../services/exercise-service.js";
 import ExerciseCard from "./../ExerciseCard/ExerciseCard";
-import { FilterContext } from "../../pages/DashBoard.jsx";
-
+import { useFilterContext } from "../../services/context/filter-context.jsx";
 export default function DataGrid(props) {
-  const { filter } = useContext(FilterContext);
+  const { filter } = useFilterContext();
   const [exercises, setExercises] = useState([]);
   // const musclesId = [
   //   "11a71b4e-1c3a-484c-9776-68b2b6288821", //trapecio

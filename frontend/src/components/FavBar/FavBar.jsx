@@ -1,25 +1,29 @@
 import React from "react";
 import { LiList, SmallTitle } from "../../styledComponents/styledComponents";
 import { StyledFavBar } from "./styles";
-
+import { getSavedWorkouts } from "../../services/exercise-service";
+import { useEffect } from "react";
+import { useState } from "react";
+import FavItem from "../FavItem/FavItem";
+import { useFavExerciseContext } from "../../services/context/fav-exercise-context";
 export default function FavBar() {
-  const exercises = [
-    "1 Lorem, ipsum.",
-    "2 Lorem, ipsum.",
-    "3 Lorem, ipsum.",
-    "4 Lorem, ipsum.",
-    "5 Lorem, ipsum.",
-    "6 Lorem, ipsum.",
-    "7 Lorem, ipsum.",
-    "8 Lorem, ipsum.",
-    "9 Lorem, ipsum.",
-  ];
-  const listExercises = exercises.map((exercise) => (
-    <LiList key={exercise}>{exercise}</LiList>
+  const { exercisesFav, setExercisesFav } = useFavExerciseContext();
+  useEffect(() => {
+    console.log("favbar cargado");
+    const readFav = async () => {
+      const data = await getSavedWorkouts();
+      setExercisesFav(data);
+    };
+    readFav().catch(console.error);
+  }, []);
+
+  console.log(exercisesFav);
+  const listExercises = exercisesFav.map((exercise) => (
+    <LiList key={exercise.workout_id}>{exercise.name}</LiList>
   ));
   return (
     <StyledFavBar>
-      <SmallTitle></SmallTitle>
+      <SmallTitle>Favourites</SmallTitle>
       {listExercises}
     </StyledFavBar>
   );

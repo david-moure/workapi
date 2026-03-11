@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyledExerciseCard } from "./styles";
-import { getImage } from "../../services/exercise-service";
+import { getImage, saveWorkout } from "../../services/exercise-service";
+import MyButton from "../MyButton/MyButton";
+import { useFavExerciseContext } from "../../services/context/fav-exercise-context";
 
 // const exercise = {
 //   id: "21f0113f-2775-43f1-8cd6-21e6ae02f719",
@@ -34,6 +36,7 @@ import { getImage } from "../../services/exercise-service";
 // };
 export default function ExerciseCard(props) {
   const [svgObj, setSvgObj] = useState(null);
+  const { exercisesFav, setExercisesFav } = useFavExerciseContext();
   useEffect(() => {
     const fetchImage = async () => {
       const svg = await getImage(props.exercise.id);
@@ -43,7 +46,31 @@ export default function ExerciseCard(props) {
 
     fetchImage().catch(console.error);
   }, []);
-
+  const addToFavourites = () => {
+    saveWorkout(
+      props.exercise.id,
+      props.exercise.name,
+      props.exercise.categories[0].name,
+      props.exercise.primaryMuscles[0].name,
+    );
+    setExercisesFav((prevFav) => {
+      const favWorkout = prevFav.find(
+        (fav) => fav.workout_id === props.exercise.id,
+      );
+      if (!favWorkout) {
+        return [
+          ...prevFav,
+          {
+            workout_id: props.exercise.id,
+            name: props.exercise.name,
+            category: props.exercise.categories[0].name,
+            primary_muscle: props.exercise.primaryMuscles[0].name,
+          },
+        ];
+      }
+      return [...prevFav];
+    });
+  };
   return (
     <StyledExerciseCard>
       <div className="image" dangerouslySetInnerHTML={{ __html: svgObj }} />
@@ -52,6 +79,7 @@ export default function ExerciseCard(props) {
         {" "}
         Category: <strong>{props.exercise.categories[0].name}</strong>{" "}
       </p>
+      <MyButton handleClick={addToFavourites}></MyButton>
     </StyledExerciseCard>
   );
 }
