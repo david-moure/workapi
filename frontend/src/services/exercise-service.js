@@ -54,17 +54,20 @@ export async function deleteWorkout(idW) {
   });
 }
 
-export async function getExercisesByFilter(idW, pageW) {
+export async function getExercisesByFilter(filter, pageW) {
   console.log("Workouts by Filter");
   const urlFetch = `${LOCALHOST_URL}workoutMuscle`;
   const response = await fetch(urlFetch, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      id: idW,
+      id: filter,
       page: pageW,
     }),
   });
+  console.log("Ha fetcheado");
+  console.log("Response", response);
+
   if (!response.ok) throw new Error("Error de lectura del backend");
   const data = await response.json();
   console.log(data);

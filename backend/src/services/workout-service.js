@@ -32,8 +32,19 @@ async function getMuscleList() {
   return muscles;
 }
 async function getWorkoutsByMuscle(id, page = 1) {
-  const workouts = await getworkoutByMusclePage(id, page);
-  return workouts;
+  console.log("Dentro del servicio:");
+  console.log("Servicio-ID:", id);
+  console.log("Servicio-PAGE:", page);
+  if (id) {
+    console.log("Enviado por donde existe el ID, a: getworkoutByMusclePage");
+    const workouts = await getworkoutByMusclePage(id, page);
+    return workouts;
+  } else {
+    console.log("Enviado por donde NO existe el ID, a: getPage");
+
+    const workouts = await getPage(page);
+    return workouts;
+  }
 }
 module.exports = {
   getAllWorkouts,

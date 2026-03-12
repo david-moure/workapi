@@ -5,7 +5,7 @@ export const StyledDashBoard = styled.div`
   height: 100%;
   grid-template-columns: 0.5fr 1fr 0.5fr;
   grid-template-areas:
-    "header header header"
+    ". header pagination"
     "sidebar main  favourite"
     "sidebar main favourite";
   gap: 1rem;

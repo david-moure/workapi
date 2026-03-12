@@ -70,7 +70,7 @@ router.post("/workoutMuscle", async (req, res) => {
 
   console.log("ID:", id);
   console.log("PAGE:", page);
-  const muscles = await getWorkoutsByMuscle(id, page ?? "");
+  const muscles = await getWorkoutsByMuscle(id ?? "", page ?? "");
   res.json(muscles);
 });
 

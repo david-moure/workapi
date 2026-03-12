@@ -6,6 +6,7 @@ import { StyledDashBoard } from "./styles.js";
 import FavBar from "../components/FavBar/FavBar.jsx";
 import { FilterContextProvider } from "../services/context/filter-context.jsx";
 import { FavExerciseContextProvider } from "../services/context/fav-exercise-context.jsx";
+import Pagination from "../components/Pagination/Pagination.jsx";
 
 export default function Dashboard() {
   const [filter, setFilter] = useState("");
@@ -15,6 +16,7 @@ export default function Dashboard() {
       <FilterContextProvider>
         <FavExerciseContextProvider>
           <Header></Header>
+          <Pagination></Pagination>
           <DataGrid variante="blue"></DataGrid>
           <SideBar></SideBar>
           <FavBar></FavBar>

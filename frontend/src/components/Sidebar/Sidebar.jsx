@@ -19,7 +19,7 @@ const roundedShadow = `
   border-radius: 1rem;
   box-shadow:  0 2px 8px rgba(0,0,0,0.35)`;
 export default function SideBar() {
-  const { filter, setFilter } = useFilterContext();
+  const { filter, setFilter, setPage } = useFilterContext();
   const [muscles, setMuscles] = useState([]);
   useEffect(() => {
     const fetchMuscleList = async () => {
@@ -32,7 +32,7 @@ export default function SideBar() {
   function handleChange(ev) {
     const target = ev.target;
     const value = target.value;
-
+    setPage(1);
     if (filter === value) {
       setFilter(null);
       return;

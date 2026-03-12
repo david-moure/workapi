@@ -13,15 +13,16 @@ export const FilterContextProvider = ({ children }) => {
   const [filter, setFilter] = useState("");
   const [exercises, setExercises] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [length, setLenght] = useState(0);
+  const [length, setLenght] = useState(1);
   const [page, setPage] = useState(1);
 
   const fetchExercises = useCallback(async () => {
     setIsLoading(true);
     try {
       let data = [];
-      if (filter) {
+      if (filter || page > 1) {
         data = await getExercisesByFilter(filter, page);
+        console.log(data);
       } else {
         console.log("Default");
         data = await getAllExercises();
@@ -34,7 +35,7 @@ export const FilterContextProvider = ({ children }) => {
     } catch {
       console.error;
     }
-  }, [setIsLoading, filter]);
+  }, [setIsLoading, filter, page]);
   useEffect(() => {
     fetchExercises();
   }, [fetchExercises]);
@@ -43,6 +44,8 @@ export const FilterContextProvider = ({ children }) => {
     setFilter,
     exercises,
     setExercises,
+    page,
+    setPage,
   };
 
   return (

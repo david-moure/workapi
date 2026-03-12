@@ -1,6 +1,6 @@
 const API_URL = "https://api.workoutapi.com/exercises";
 const API_KEY =
-  "970fe0d4d6b78c5a1f8d653a2be02224b1436b1540e0a673d7aac191c7309e50";
+  "c197c4423762d1833e27778d15170052d880b88307cedd684da4ddf938361196";
 let workoutsCache = [];
 let workoutsByMuscle = [];
 let amountExercises = 4;
@@ -11,7 +11,8 @@ async function loadCache() {
     headers: { "x-api-key": API_KEY },
   });
   if (!response.ok) {
-    throw new Error("Error en la lectura de la API", response);
+    console.log(response.status);
+    throw new Error("Error en la lectura de la API", response.status);
   }
   const data = await response.json();
   workoutsCache = data;
@@ -28,19 +29,24 @@ async function getAll() {
   return workouts;
 }
 
-async function getPage(page, workouts = workoutsCache) {
+async function getPage(page, workoutsToWork) {
   if (workoutsCache.length == 0) {
     await loadCache();
   }
+  workoutsToWork ??= workoutsCache;
   console.log("Longitud de workoutsCache", workoutsCache.length);
   console.log("Pagina:", page);
-  if (workouts.length > 0 && page > 0) {
-    const workoutsByLength = workouts.filter(
+
+  if (workoutsToWork.length > 0 && page > 0) {
+    const workouts = workoutsToWork.filter(
       (_, index) =>
         index >= amountExercises * (page - 1) && index < amountExercises * page,
     );
-
-    return workoutsByLength;
+    console.log("Antes de dividir el total de paginas");
+    console.log("Workouts: ", workouts.length);
+    const totalPage = Math.ceil(workoutsToWork.length / amountExercises);
+    console.log("Total paginas:", totalPage);
+    return { workouts, totalPage };
   }
 }
 
